@@ -1,0 +1,32 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: biharbook
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - pg_network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@user.com
+      PGADMIN_DEFAULT_PASSWORD: test@user.com
+    ports:
+      - "8080:80"
+    networks:
+      - pg_network
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+
+networks:
+  pg_network:
